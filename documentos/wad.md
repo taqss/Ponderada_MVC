@@ -90,7 +90,36 @@ ALTER TABLE "Categoria" ADD FOREIGN KEY ("id_Usuário") REFERENCES "Usuário" ("
 ```
 
 ### 3.1.1 BD e Models (Semana 5)
-*Descreva aqui os Models implementados no sistema web*
+#### TarefaModel
+Responsável por todas as operações com a tabela `Tarefas` no banco de dados PostgreSQL.
+
+**Estrutura da tabela `Tarefas`:**
+| Campo             | Tipo        | Obrigatório | Descrição                              |
+|-------------------|-------------|-------------|----------------------------------------|
+| id                | SERIAL      | Sim         | Chave primária auto-incrementável      |
+| titulo            | VARCHAR(255)| Sim         | Título/descrição breve da tarefa       |
+| nota              | TEXT        | Não         | Detalhes adicionais                    |
+| data_criacao      | TIMESTAMP   | Sim         | Data/hora de criação automática        |
+| prazo_conclusao   | DATE        | Não         | Data limite para conclusão             |
+
+**Métodos principais:**
+
+| Método            | SQL Equivalent               | Descrição                                  |
+|-------------------|-----------------------------|-------------------------------------------|
+| `criar()`         | `INSERT INTO Tarefas...`    | Cria nova tarefa no banco                 |
+| `listar()`        | `SELECT * FROM Tarefas`     | Retorna todas as tarefas ordenadas por data |
+| `buscarPorId()`   | `SELECT... WHERE id = $1`   | Busca uma tarefa específica por ID        |
+| `atualizar()`     | `UPDATE Tarefas...`         | Edita os dados de uma tarefa existente    |
+| `deletar()`       | `DELETE FROM Tarefas...`    | Remove permanentemente uma tarefa         |
+
+**Exemplo de Uso:**
+```javascript
+const tarefa = await TarefaModel.criar(
+  "Reunião com equipe", 
+  "Preparar apresentação",
+  "2023-12-15"
+);
+```
 
 ### 3.2. Arquitetura (Semana 5)
 
@@ -118,7 +147,20 @@ ALTER TABLE "Categoria" ADD FOREIGN KEY ("id_Usuário") REFERENCES "Usuário" ("
 
 ### 3.6. WebAPI e endpoints (Semana 05)
 
-*Utilize um link para outra página de documentação contendo a descrição completa de cada endpoint. Ou descreva aqui cada endpoint criado para seu sistema.*  
+#### POST `/api/tarefas`
+**Cria uma nova tarefa**
+
+**Request:**
+```http
+POST /api/tarefas
+Content-Type: application/json
+
+{
+  "titulo": "Estudar React",
+  "nota": "Hooks useEffect",
+  "prazo_conclusao": "2023-12-20"
+}  
+```
 
 ### 3.7 Interface e Navegação (Semana 07)
 
