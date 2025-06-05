@@ -125,33 +125,66 @@ exports.atualizarTarefa = async (req, res) => {
   }
 };
 
-exports.excluirTarefa = async (req, res) => {
+exports.concluirTarefa = async (req, res) => {
   const { id } = req.params;
-  
+
   try {
     const query = `
-      DELETE FROM Tarefas 
-      WHERE id = $1 
+      DELETE FROM Tarefas
+      WHERE id = $1
       RETURNING id, titulo`;
-    
+
     const result = await pool.query(query, [id]);
-    
+
     if (result.rows.length === 0) {
       return res.status(404).json({ error: 'Tarefa não encontrada' });
     }
-    
-    res.status(200).json({ 
-      success: true, 
+
+    res.status(200).json({
+      success: true,
+      message: 'Tarefa marcada como concluída!',
+      tarefa: {
+        id: result.rows[0].id,
+        titulo: result.rows[0].titulo
+      }
+    });
+
+  } catch (err) {
+    console.error('Erro ao concluir tarefa:', err);
+    res.status(500).json({
+      error: 'Erro ao concluir tarefa',
+      ...(process.env.NODE_ENV === 'development' && { details: err.message })
+    });
+  }
+};
+
+exports.excluirTarefa = async (req, res) => {
+  const { id } = req.params;
+
+  try {
+    const query = `
+      DELETE FROM Tarefas
+      WHERE id = $1
+      RETURNING id, titulo`;
+
+    const result = await pool.query(query, [id]);
+
+    if (result.rows.length === 0) {
+      return res.status(404).json({ error: 'Tarefa não encontrada' });
+    }
+
+    res.status(200).json({
+      success: true,
       message: 'Tarefa excluída com sucesso',
       tarefa: {
         id: result.rows[0].id,
         titulo: result.rows[0].titulo
       }
     });
-    
+
   } catch (err) {
     console.error('Erro ao excluir tarefa:', err);
-    res.status(500).json({ 
+    res.status(500).json({
       error: 'Erro ao excluir tarefa',
       ...(process.env.NODE_ENV === 'development' && { details: err.message })
     });

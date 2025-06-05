@@ -1,0 +1,7 @@
+### Health Check
+GET http://localhost:3000/api/health
+
+###
+
+### Concluir tarefa (ID = 1)
+PATCH http://localhost:3000/api/tarefas/1/concluir

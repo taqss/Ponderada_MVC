@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gerenciador de Tarefas Pessoal</title>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <header class="header">
+            <h1>Gerenciador de Tarefas Pessoal</h1>
+            <p>Organize suas atividades do dia a dia de forma simples e eficiente</p>
+        </header>
+
+        <!-- Formulário para nova tarefa -->
+        <section class="task-form">
+            <h2>Nova Tarefa</h2>
+            <form id="taskForm">
+                <div class="form-group">
+                    <label for="titulo">Título da Tarefa *</label>
+                    <input type="text" id="titulo" name="titulo" required 
+                           placeholder="Ex: Reunião com equipe, Estudar JavaScript...">
+                </div>
+                
+                <div class="form-group">
+                    <label for="nota">Descrição (opcional)</label>
+                    <textarea id="nota" name="nota" 
+                              placeholder="Adicione detalhes sobre a tarefa..."></textarea>
+                </div>
+                
+                <div class="form-group">
+                    <label for="prazo_conclusao">Prazo de Conclusão (opcional)</label>
+                    <input type="date" id="prazo_conclusao" name="prazo_conclusao">
+                </div>
+                
+                <button type="submit" class="btn btn-primary">
+                    Criar Tarefa
+                </button>
+            </form>
+        </section>
+
+        <!-- Lista de tarefas -->
+        <section class="tasks-section">
+            <h2>Minhas Tarefas</h2>
+            <div id="tasksContainer">
+                <div class="loading">Carregando tarefas...</div>
+            </div>
+        </section>
+    </div>
+
+    <!-- Modal para edição de tarefa -->
+    <div id="editModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Editar Tarefa</h2>
+                <span class="close">&times;</span>
+            </div>
+            <form id="editTaskForm">
+                <div class="form-group">
+                    <label for="editTitulo">Título da Tarefa *</label>
+                    <input type="text" id="editTitulo" name="titulo" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="editNota">Descrição (opcional)</label>
+                    <textarea id="editNota" name="nota"></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label for="editPrazoConclusao">Prazo de Conclusão (opcional)</label>
+                    <input type="date" id="editPrazoConclusao" name="prazo_conclusao">
+                </div>
+
+                <div style="display: flex; gap: 10px; justify-content: flex-end;">
+                    <button type="button" class="btn btn-secondary" onclick="taskManager.closeModal()">
+                        Cancelar
+                    </button>
+                    <button type="submit" class="btn btn-primary">
+                        Salvar Alterações
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Modal de confirmação personalizado -->
+    <div id="confirmModal" class="modal">
+        <div class="modal-content confirm-modal">
+            <div class="modal-header">
+                <h2 id="confirmTitle">Confirmar Ação</h2>
+            </div>
+            <div class="modal-body">
+                <p id="confirmMessage">Tem certeza que deseja realizar esta ação?</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" onclick="taskManager.closeConfirmModal()">
+                    Cancelar
+                </button>
+                <button type="button" class="btn btn-danger" id="confirmButton" onclick="taskManager.confirmAction()">
+                    Confirmar
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script src="/js/utils.js"></script>
+    <script src="/js/app.js"></script>
+</body>
+</html>
