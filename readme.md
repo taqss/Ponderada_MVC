@@ -50,7 +50,7 @@ cd gerenciador-tarefas
 ### 2. Instalar dependências
 
 ```bash
-npm install
+npm install;
 ```
 
 ### 3. Configurar banco de dados
